@@ -1,8 +1,15 @@
 import { Trash, ThumbsUp } from "phosphor-react";
+import { useState } from "react";
 import { Avatar } from "../Avatar/Avatar";
 import styles from "./Comment.module.css";
 
-export function Comment() {
+export function Comment({content}) {
+
+  let [count, setCount] = useState(0)
+
+  function handleAplaudir(){
+    setCount(count+1)
+  }
   return (
     <div className={styles.comment}>
       <Avatar hasBorder={false} src="https://github.com/GustavoGuke.png" />
@@ -20,11 +27,11 @@ export function Comment() {
               <Trash size={20} />
             </button>
           </header>
-          <p>Muito Bom</p>
+          <p>{content}</p>
         </div>
         <footer>
-          <button>
-            <ThumbsUp /> aplaudir <span>20</span>
+          <button onClick={handleAplaudir}>
+            <ThumbsUp /> aplaudir <span>{count}</span>
           </button>
         </footer>
       </div>
