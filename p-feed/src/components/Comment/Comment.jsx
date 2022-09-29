@@ -3,12 +3,17 @@ import { useState } from "react";
 import { Avatar } from "../Avatar/Avatar";
 import styles from "./Comment.module.css";
 
-export function Comment({content}) {
+export function Comment({content, onDeleteComment}) {
 
   let [count, setCount] = useState(0)
 
   function handleAplaudir(){
     setCount(count+1)
+  }
+  function handleDeleteComment(){
+    
+    console.log('deletar')
+    onDeleteComment(content)
   }
   return (
     <div className={styles.comment}>
@@ -23,7 +28,10 @@ export function Comment({content}) {
                 Publicado há 1h
               </time>
             </div>
-            <button title="Deletar Comentário">
+            <button 
+              title="Deletar Comentário"
+              onClick={handleDeleteComment}
+              >
               <Trash size={20} />
             </button>
           </header>
