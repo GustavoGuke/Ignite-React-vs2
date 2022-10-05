@@ -33,7 +33,7 @@ const post = [
       { type: "paragraph", content: " consectetur adipisicing elit." },
       { type: "link", content: "Numquam, eius debitis commodi quas " },
     ],
-    publishedAt: new Date()
+    publisheAt: new Date()
   },
 ];
 
@@ -52,7 +52,7 @@ function App() {
               key={posts.id}
               author = {posts.author}
               content = {posts.content}
-              publishedAt = {posts.publishedAt}
+              publisheAt = {posts.publisheAt}
             />
             )
           })}
