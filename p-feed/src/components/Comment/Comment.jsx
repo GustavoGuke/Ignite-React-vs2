@@ -8,7 +8,9 @@ export function Comment({content, onDeleteComment}) {
   let [count, setCount] = useState(0)
 
   function handleAplaudir(){
-    setCount(count+1)
+    setCount((state)=> {
+      return state + 1
+    })
   }
   function handleDeleteComment(){
     
