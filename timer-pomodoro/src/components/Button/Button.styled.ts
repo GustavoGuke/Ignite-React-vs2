@@ -9,14 +9,16 @@ interface ButtonColors {
 const ButtonColor = {
     primary: 'purple',
     secondary: 'orange',
-    danger: 'brown',
-    sucess: 'ligth-green'
+    danger: 'chocolate',
+    sucess: 'lightGreen'
 }
 export const ButtonContainer = styled.button<ButtonColors>`
   width: 130px;
   height: 40px;
+  margin: 8px;
 
-  ${props => {
+  background-color: ${props => props.theme[props.variant]};
+  /* ${props => {
     return css`background-color: ${ButtonColor[props.variant]}`;
-  }}
+  }} */
 `;
