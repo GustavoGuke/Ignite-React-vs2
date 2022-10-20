@@ -1,4 +1,4 @@
-import { Play } from "phosphor-react";
+import { Play } from 'phosphor-react'
 
 export function Home() {
   return (
