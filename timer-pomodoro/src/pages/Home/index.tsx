@@ -12,15 +12,33 @@ import {
   TaskInput,
 } from './styles'
 
-export function Home() {
-  const { register, handleSubmit, watch } = useForm()
+const validationSchemaZod = zod.object({
+  task: zod.string().min(2, 'Infome a tarefa'),
+  minutesInput: zod.number().min(5).max(60),
+})
 
-  function handleCreateNewCicle(data: any) {
-    console.log(data)
+// interface NewCicleFormData {
+//   task: string
+//   minutesInput: number
+// }
+
+type NewCicleFormData = zod.infer<typeof validationSchemaZod>
+export function Home() {
+  const { register, handleSubmit, reset } = useForm<NewCicleFormData>({
+    resolver: zodResolver(validationSchemaZod),
+    defaultValues: {
+      task: '',
+      minutesInput: 0,
+    },
+  })
+
+  function handleCreateNewCicle(data: NewCicleFormData) {
+    console.log(data.task)
+    reset()
   }
 
-  const minutesInput = watch('minutesInput')
-  const task = watch('task')
+  // const minutesInput = watch('minutesInput')
+  // const task = watch('task')
   return (
     <HomeContainer>
       <form onSubmit={handleSubmit(handleCreateNewCicle)}>
@@ -59,7 +77,7 @@ export function Home() {
           <span>0</span>
         </CountdownContainer>
 
-        <Startbutton disabled={ !task|!minutesInput } type="submit">
+        <Startbutton type="submit">
           <Play size={24} />
           START
         </Startbutton>
