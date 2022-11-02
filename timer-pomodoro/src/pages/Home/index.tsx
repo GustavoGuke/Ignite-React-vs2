@@ -1,4 +1,4 @@
-import { Play } from 'phosphor-react'
+import { HandPalm, Play } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
@@ -11,6 +11,7 @@ import {
   MinutesInput,
   Separator,
   Startbutton,
+  Stopbutton,
   TaskInput,
 } from './styles'
 
@@ -31,6 +32,7 @@ interface Cycle {
   task: string
   minutesAmount: number
   startDate: Date
+  interruptedDate?: Date
 }
 export function Home() {
   const [cycles, setCycles] = useState<Cycle[]>([])
@@ -85,7 +87,7 @@ export function Home() {
   const seconds = String(secondsAmount).padStart(2, '0')
 
   useEffect(() => {
-    if(activeCycle){
+    if (activeCycle) {
       document.title = `${minutes}: ${seconds}`
     }
   }, [minutes, seconds, activeCycle])
@@ -102,6 +104,7 @@ export function Home() {
             list="task-list"
             placeholder="Nome do projeto"
             {...register('task')}
+            disabled={!!activeCycle}
           />
 
           <datalist id="task-list">
@@ -116,6 +119,7 @@ export function Home() {
             step={5}
             min={5}
             max={60}
+            disabled={!!activeCycle}
             {...register('minutesInput', { valueAsNumber: true })}
           />
 
@@ -130,10 +134,17 @@ export function Home() {
           <span>{seconds[1]}</span>
         </CountdownContainer>
 
-        <Startbutton disabled={!task} type="submit">
-          <Play size={24} />
-          START
-        </Startbutton>
+        {activeCycle ? (
+          <Stopbutton type="button">
+            <HandPalm size={24} />
+            STOP
+          </Stopbutton>
+        ) : (
+          <Startbutton disabled={!task} type="submit">
+            <Play size={24} />
+            START
+          </Startbutton>
+        )}
       </form>
     </HomeContainer>
   )
