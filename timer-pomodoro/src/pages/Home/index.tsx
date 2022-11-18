@@ -14,6 +14,7 @@ import {
   Stopbutton,
   TaskInput,
 } from './styles'
+import { date } from 'zod'
 
 const validationSchemaZod = zod.object({
   task: zod.string().min(1),
@@ -38,6 +39,7 @@ export function Home() {
   const [cycles, setCycles] = useState<Cycle[]>([])
   const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
+
   const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(validationSchemaZod),
     defaultValues: {
@@ -75,6 +77,19 @@ export function Home() {
     setActiveCycleId(id)
     setAmountSecondsPassed(0)
     reset()
+  }
+
+  function handleInterruptCicle() {
+    setCycles(
+      cycles.map((cycle) => {
+        if (cycle.id === activeCycle) {
+          return { ...cycle, interruptedDate: new date() }
+        } else {
+          return cycle
+        }
+      }),
+    )
+    setActiveCycleId(null)
   }
 
   const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0
@@ -135,7 +150,7 @@ export function Home() {
         </CountdownContainer>
 
         {activeCycle ? (
-          <Stopbutton type="button">
+          <Stopbutton onClick={handleInterruptCicle} type="button">
             <HandPalm size={24} />
             STOP
           </Stopbutton>
