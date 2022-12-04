@@ -2,7 +2,7 @@ import { createContext, ReactNode, useState } from 'react'
 
 interface createNewCycleData {
   task: string
-  minutesAmount: number
+  minutesInput: number
 }
 
 interface Cycle {
@@ -15,6 +15,7 @@ interface Cycle {
 }
 
 interface CycleContextType {
+  cycles: Cycle[]
   activeCycle: Cycle | undefined
   activeCycleId: string | null
   markCurrentCycleAsFinished: () => void
@@ -28,9 +29,9 @@ interface ChildrenContext {
   children: ReactNode
 }
 
-export const CyclesContext = createContext({} as CycleContextType)
+export const cyclesContext = createContext({} as CycleContextType)
 
-export default function CyclesContextProvider({ children }: ChildrenContext) {
+export function CyclesContextProvider({ children }: ChildrenContext) {
   const [cycles, setCycles] = useState<Cycle[]>([])
   const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
@@ -56,7 +57,7 @@ export default function CyclesContextProvider({ children }: ChildrenContext) {
     const newCycle: Cycle = {
       id,
       task: data.task,
-      minutesAmount: data.minutesAmount,
+      minutesAmount: data.minutesInput,
       startDate: new Date(),
     }
 
@@ -79,8 +80,9 @@ export default function CyclesContextProvider({ children }: ChildrenContext) {
     setActiveCycleId(null)
   }
   return (
-    <CyclesContext.Provider
+    <cyclesContext.Provider
       value={{
+        cycles,
         activeCycle,
         activeCycleId,
         amountSecondsPassed,
@@ -91,6 +93,6 @@ export default function CyclesContextProvider({ children }: ChildrenContext) {
       }}
     >
       {children}
-    </CyclesContext.Provider>
+    </cyclesContext.Provider>
   )
 }
