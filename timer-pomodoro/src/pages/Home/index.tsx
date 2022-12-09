@@ -16,7 +16,7 @@ import Countdown from './components/Countdown'
 
 const validationSchemaZod = zod.object({
   task: zod.string().min(1),
-  minutesInput: zod.number().min(1).max(60),
+  minutesAmount: zod.number().min(1).max(60),
 })
 type NewCycleFormData = zod.infer<typeof validationSchemaZod>
 export function Home() {
@@ -26,7 +26,7 @@ export function Home() {
     resolver: zodResolver(validationSchemaZod),
     defaultValues: {
       task: '',
-      minutesInput: 0,
+      minutesAmount: 0,
     },
   })
   const { handleSubmit, watch, reset } = newCycleForm
