@@ -20,7 +20,7 @@ export default function Countdown() {
       interval = setInterval(() => {
         const secondDifferencial = differenceInSeconds(
           new Date(),
-          activeCycle.startDate,
+          new Date(activeCycle.startDate),
         )
         if (secondDifferencial >= totalSeconds) {
           markCurrentCycleAsFinished()

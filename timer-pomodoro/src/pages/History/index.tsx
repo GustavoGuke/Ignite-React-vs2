@@ -22,7 +22,7 @@ export function History() {
           </thead>
           <tbody>
             {cycles.map((cycle) => {
-              console.log(cycle.startDate)
+              console.log(cycle.startDate, 'tttt')
               return (
                 <tr key={cycle.id}>
                   <td>{cycle.task}</td>
