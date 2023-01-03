@@ -29,7 +29,7 @@ export function Transaction(){
                         <td>Combustivel</td>
                         <td>
                             <PriceHighLight variant="outcome">
-                                    R$ - 280
+                                    R$ - 280,00
                             </PriceHighLight>
                         </td>
                         <td>Venda</td>
